@@ -74,10 +74,10 @@
 
 The diagnostic text will be rendered using the function defined
 in `flymake-diagnostic-at-point-display-diagnostic-function.'"
-  (when (and flymake-mode
-             (get-char-property (point) 'flymake-diagnostic))
-    (let ((text (flymake-diagnostic-message (get-char-property (point) 'flymake-diagnostic))))
-      (funcall flymake-diagnostic-at-point-display-diagnostic-function text))))
+  (when (flymake-mode)
+    (if-let* ((diag (get-char-property (point) 'flymake-diagnostic))
+              (message (flymake-diagnostic-message diag)))
+        (funcall flymake-diagnostic-at-point-display-diagnostic-function message))))
 
 ;;;###autoload
 (defun flymake-diagnostic-at-point-set-timer ()
